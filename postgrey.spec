@@ -1,20 +1,23 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	Postfix Greylisting Policy Server
 Name:		postgrey
 Version: 	1.21
-Release:	0.2
+Release:	0.4
 License: 	GPL v2
 Group: 		Daemons
 Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	1274e073be5178445e0892a9dcc6fe98
 Source1:	%{name}.init
-Patch:		%{name}-group.patch
+Patch0:		%{name}-group.patch
+Patch1:		%{name}-postfix_dir.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
 Buildarch:	noarch
+BuildRequires:	rpm-perlprov
 Requires:	postfix
 BuildArch:	noarch
 BuildRoot: 	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		confdir /etc/postfix
+%define		confdir /etc/mail
 
 %description
 Postgrey is a Postfix policy server implementing greylisting.
@@ -38,7 +41,8 @@ or if you like to use inet sockets (modify the IP if needed):
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
