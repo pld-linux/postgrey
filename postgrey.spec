@@ -1,7 +1,6 @@
-# TODO:
-# - consider using postfix or mail group... (dunno if it's good idea)
 %include	/usr/lib/rpm/macros.perl
 Summary:	Postfix Greylisting Policy Server
+Summary(pl):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version: 	1.21
 Release:	1
@@ -13,7 +12,6 @@ Source1:	%{name}.init
 Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
-Buildarch:	noarch
 BuildRequires:	rpm-perlprov
 Requires:	postfix
 BuildArch:	noarch
@@ -22,21 +20,42 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		confdir /etc/mail
 
 %description
-Postgrey is a Postfix policy server implementing greylisting.
-When a request for delivery of a mail is received by Postfix 
-via SMTP, the triplet CLIENT_IP / SENDER / RECIPIENT is built. 
-If it is the first time that this triplet is seen, or if the 
-triplet was first seen less than 5 minutes, then the mail gets 
-rejected with a temporary error. Hopefully spammers or viruses 
-will not try again later, as it is however required per RFC.
+Postgrey is a Postfix policy server implementing greylisting. When a
+request for delivery of a mail is received by Postfix via SMTP, the
+triplet CLIENT_IP / SENDER / RECIPIENT is built. If it is the first
+time that this triplet is seen, or if the triplet was first seen less
+than 5 minutes, then the mail gets rejected with a temporary error.
+Hopefully spammers or viruses will not try again later, as it is
+however required per RFC.
+
 Edit your configuration files:
-/etc/postfix/main.cf:
+%{confdir}/main.cf:
   smtpd_recipient_restrictions = ...
     check_policy_service unix:postgrey/socket, ...
 or if you like to use inet sockets (modify the IP if needed):
 /etc/sysconfig/postgrey:
   OPTIONS="--inet=127.0.0.1:10023"
-/etc/postfix/main.cf:
+%{confdir}/main.cf:
+  smtpd_recipient_restrictions = ...
+    check_policy_service inet:127.0.0.1:10023, ...
+
+%description -l pl
+Postgrey to serwer polityki dla Postfiksa implementuj±cy "szare
+listy". Kiedy Postfix otrzymuje po SMTP ¿±danie dostarczenia poczty,
+tworzony jest triplet IP_KLIENTA / NADAWCA / ADRESAT. Je¶li dany
+triplet jest widziany po raz pierwszy lub by³ widziany po raz pierwszy
+mniej ni¿ 5 minut temu, poczta jest odrzucana z tymczasowym b³êdem.
+Mo¿na mieæ nadziejê, ¿e spamerzy i wirusy nie bêd± próbowaæ ponownie,
+co jest jednak wymagane przez RFC.
+
+Aby u¿yæ tego programu nale¿y zmodyfikowaæ pliki konfiguracyjne:
+%{confdir}/main.cf:
+  smtpd_recipient_restrictions = ...
+    check_policy_service unix:postgrey/socket, ...
+lub je¶li chcemy u¿ywaæ gniazd inet (w razie potrzeby zmieniæ IP):
+/etc/sysconfig/postgrey:
+  OPTIONS="--inet=127.0.0.1:10023"
+%{confdir}/main.cf:
   smtpd_recipient_restrictions = ...
     check_policy_service inet:127.0.0.1:10023, ...
 
@@ -96,4 +115,4 @@ fi
 %attr(640,root,postgrey) %config(noreplace) /etc/sysconfig/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(755,root,root) %{_sbindir}/postgrey*
-%dir %attr(0711,postgrey,postgrey) %{_var}/spool/postfix/%{name}
+%dir %attr(711,postgrey,postgrey) %{_var}/spool/postfix/%{name}
