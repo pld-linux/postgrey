@@ -1,22 +1,21 @@
 Summary:	Postfix Greylisting Policy Server
 Name:		postgrey
 Version: 	1.21
-Release:	0.1
+Release:	0.2
 License: 	GPL
 Group: 		Daemons
-Source: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
-Source1:	%{name}.sysv
-Patch:		postgrey-group.patch
+Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
+# Source0-md5:	1274e073be5178445e0892a9dcc6fe98
+Source1:	%{name}.init
+Patch:		%{name}-group.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
 Buildarch:	noarch
 Prereq: 	perl, perl-IO-Multiplex, perl-Net-Server, perl-BerkeleyDB
+Requires:	postfix
 BuildArch:	noarch
 BuildRoot: 	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		confdir /etc/postfix
-%define		uid	95
-%define		gid	95
-
 
 %description
 Postgrey is a Postfix policy server implementing greylisting.
@@ -61,34 +60,34 @@ install contrib/postgreyreport $RPM_BUILD_ROOT%{_sbindir}
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ $1 -eq 1 ]; then
-	%{_sbindir}/groupadd -g %{gid} -r %{name} &>/dev/null || :
-	%{_sbindir}/useradd -d %{_var}/spool/postfix/%{name} -s /sbin/nologin -u %{uid} -g %{gid} -M -r %{name} 2>/dev/null || :
-fi
+%groupadd -g 155 postgrey
+%useradd -u 155 -d %{_var}/spool/postfix/%{name} -s /sbin/false -c "Postfix Greylisting Policy" -g postgrey postgrey
 
 %post
 /sbin/chkconfig --add %{name}
 
 %preun
 if [ $1 -eq 0 ]; then
-        /sbin/service %{name} stop &>/dev/null || :
+	if [ -f /var/lock/subsys/%{name} ]; then
+		/etc/rc.d/init.d/%{name} stop >&2
+	fi
         /sbin/chkconfig --del %{name}
 fi
 
 %postun
 if [ $1 -eq 0 ]; then
-	%{_sbindir}/userdel %{name} 2>/dev/null || :
-	%{_sbindir}/groupdel %{name} 2>/dev/null || :
-	%{__rm} -rf %{_var}/spool/postfix/%{name}
+	%userremove postgrey
+	%groupremove postgrey
+	# should be done?:
+	rm -rf %{_var}/spool/postfix/%{name}
 fi
 
-
 %files
-%defattr(-,root,root)
+%defattr(644,root,root,755)
 %doc README Changes COPYING
-%{_initrddir}/%{name}
-%config(noreplace) %{confdir}/postgrey_whitelist_clients
-%config(noreplace) %{confdir}/postgrey_whitelist_recipients
-%config(noreplace) %{confdir}/postgrey_whitelist_clients.local
-%{_sbindir}/postgrey*
+%config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients
+%config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_recipients
+%config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients.local
+%attr(754,root,root) /etc/rc.d/init.d/%{name}
+%attr(755,root,root) %{_sbindir}/postgrey*
 %dir %attr(0711, postgrey, postgrey) %{_var}/spool/postfix/%{name}
