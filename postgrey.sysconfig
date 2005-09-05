@@ -1,0 +1,5 @@
+# PostGrey startup configuration file
+
+# Try to define nice-level for running postgrey
+SERVICE_RUN_NICE_LEVEL="+5"
+
