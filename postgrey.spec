@@ -1,11 +1,13 @@
+# TODO:
+# - consider using postfix or mail group... (dunno if it's good idea)
 %include	/usr/lib/rpm/macros.perl
 Summary:	Postfix Greylisting Policy Server
 Name:		postgrey
-Version:	1.21
-Release:	0.4
-License:	GPL v2
-Group:		Daemons
-Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
+Version: 	1.21
+Release:	0.5
+License: 	GPL v2
+Group: 		Daemons
+Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	1274e073be5178445e0892a9dcc6fe98
 Source1:	%{name}.init
 Patch0:		%{name}-group.patch
@@ -50,6 +52,7 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{confdir},%{_sbindir}} 
 
 # init script:
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 install postgrey_whitelist_clients $RPM_BUILD_ROOT%{confdir}
 install postgrey_whitelist_recipients $RPM_BUILD_ROOT%{confdir}
@@ -90,6 +93,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_recipients
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients.local
+%attr(640,root,postgrey) %config(noreplace) /etc/sysconfig/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(755,root,root) %{_sbindir}/postgrey*
-%dir %attr(711, postgrey, postgrey) %{_var}/spool/postfix/%{name}
+%dir %attr(0711,postgrey,postgrey) %{_var}/spool/postfix/%{name}
