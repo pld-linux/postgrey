@@ -4,7 +4,7 @@
 Summary:	Postfix Greylisting Policy Server
 Name:		postgrey
 Version: 	1.21
-Release:	0.5
+Release:	1
 License: 	GPL v2
 Group: 		Daemons
 Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
