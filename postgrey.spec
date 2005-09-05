@@ -1,11 +1,11 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Postfix Greylisting Policy Server
 Name:		postgrey
-Version: 	1.21
+Version:	1.21
 Release:	0.4
-License: 	GPL v2
-Group: 		Daemons
-Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
+License:	GPL v2
+Group:		Daemons
+Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	1274e073be5178445e0892a9dcc6fe98
 Source1:	%{name}.init
 Patch0:		%{name}-group.patch
@@ -15,7 +15,7 @@ Buildarch:	noarch
 BuildRequires:	rpm-perlprov
 Requires:	postfix
 BuildArch:	noarch
-BuildRoot: 	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		confdir /etc/mail
 
@@ -37,7 +37,6 @@ or if you like to use inet sockets (modify the IP if needed):
 /etc/postfix/main.cf:
   smtpd_recipient_restrictions = ...
     check_policy_service inet:127.0.0.1:10023, ...
-
 
 %prep
 %setup -q
@@ -93,4 +92,4 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients.local
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(755,root,root) %{_sbindir}/postgrey*
-%dir %attr(0711, postgrey, postgrey) %{_var}/spool/postfix/%{name}
+%dir %attr(711, postgrey, postgrey) %{_var}/spool/postfix/%{name}
