@@ -2,7 +2,7 @@ Summary:	Postfix Greylisting Policy Server
 Name:		postgrey
 Version: 	1.21
 Release:	0.2
-License: 	GPL
+License: 	GPL v2
 Group: 		Daemons
 Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	1274e073be5178445e0892a9dcc6fe98
@@ -10,7 +10,6 @@ Source1:	%{name}.init
 Patch:		%{name}-group.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
 Buildarch:	noarch
-Prereq: 	perl, perl-IO-Multiplex, perl-Net-Server, perl-BerkeleyDB
 Requires:	postfix
 BuildArch:	noarch
 BuildRoot: 	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -84,7 +83,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README Changes COPYING
+%doc README Changes
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_recipients
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients.local
