@@ -13,6 +13,7 @@ Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
 BuildRequires:	rpm-perlprov
+Requires:	perl-IO-Multiplex
 Requires:	postfix
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -71,7 +72,7 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{confdir},%{_sbindir}} 
 
 # init script:
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+:> $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 install postgrey_whitelist_clients $RPM_BUILD_ROOT%{confdir}
 install postgrey_whitelist_recipients $RPM_BUILD_ROOT%{confdir}
