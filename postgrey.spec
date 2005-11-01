@@ -9,6 +9,7 @@ Group: 		Daemons
 Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	1274e073be5178445e0892a9dcc6fe98
 Source1:	%{name}.init
+Source2:	%{name}.sysconfig
 Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
@@ -72,7 +73,7 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{confdir},%{_sbindir}} 
 
 # init script:
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-:> $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 install postgrey_whitelist_clients $RPM_BUILD_ROOT%{confdir}
 install postgrey_whitelist_recipients $RPM_BUILD_ROOT%{confdir}
