@@ -2,12 +2,12 @@
 Summary:	Postfix Greylisting Policy Server
 Summary(pl):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
-Version: 	1.23
+Version: 	1.24
 Release:	1
 License: 	GPL v2
 Group: 		Daemons
 Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
-# Source0-md5:	d5214a0dbca6872c5be426d0ffde534d
+# Source0-md5:	db11f4da47ee28252cf2ddd160308d7e
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-group.patch
@@ -64,7 +64,7 @@ lub je¶li chcemy u¿ywaæ gniazd inet (w razie potrzeby zmieniæ IP):
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+%patch1 -p0
 
 %install
 rm -rf $RPM_BUILD_ROOT
