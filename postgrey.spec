@@ -2,11 +2,11 @@
 Summary:	Postfix Greylisting Policy Server
 Summary(pl):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
-Version: 	1.24
+Version:	1.24
 Release:	1
-License: 	GPL v2
-Group: 		Daemons
-Source0: 	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
+License:	GPL v2
+Group:		Daemons
+Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	db11f4da47ee28252cf2ddd160308d7e
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
@@ -14,6 +14,7 @@ Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
 BuildRequires:	rpm-perlprov
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	perl-IO-Multiplex
 Requires:	postfix
 BuildArch:	noarch
@@ -93,15 +94,13 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add %{name}
 
 %preun
-if [ $1 -eq 0 ]; then
-	if [ -f /var/lock/subsys/%{name} ]; then
-		/etc/rc.d/init.d/%{name} stop >&2
-	fi
-        /sbin/chkconfig --del %{name}
+if [ "$1" = 0 ]; then
+	%service %{name} stop
+	/sbin/chkconfig --del %{name}
 fi
 
 %postun
-if [ $1 -eq 0 ]; then
+if [ "$1" = 0 ]; then
 	%userremove postgrey
 	%groupremove postgrey
 	# should be done?:
@@ -114,7 +113,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_recipients
 %config(noreplace) %verify(not md5 mtime size) %{confdir}/postgrey_whitelist_clients.local
-%attr(640,root,postgrey) %config(noreplace) /etc/sysconfig/%{name}
+%attr(640,root,postgrey) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(755,root,root) %{_sbindir}/postgrey*
 %dir %attr(711,postgrey,postgrey) %{_var}/spool/postfix/%{name}
