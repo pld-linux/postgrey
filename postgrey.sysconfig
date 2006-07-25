@@ -3,4 +3,4 @@
 # Try to define nice-level for running postgrey
 SERVICE_RUN_NICE_LEVEL="+5"
 
-RPM_SKIP_AUTO_RESTART=yes
+#RPM_SKIP_AUTO_RESTART=yes
