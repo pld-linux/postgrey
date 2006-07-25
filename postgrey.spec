@@ -3,7 +3,7 @@ Summary:	Postfix Greylisting Policy Server
 Summary(pl):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.27
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Daemons
 Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
@@ -92,7 +92,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add %{name}
-# default sysconfig file has RPM_SKIP_AUTO_RESTART=yes
 %service %{name} restart
 
 %preun
