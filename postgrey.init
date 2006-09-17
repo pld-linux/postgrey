@@ -65,7 +65,7 @@ case "$1" in
 		killproc postgrey -HUP
 		RETVAL=$?
 	else
-		msg_not_running postgrey >&2
+		msg_not_running postgrey
 		exit 7
 	fi
 	;;
