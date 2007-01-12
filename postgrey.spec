@@ -3,13 +3,15 @@ Summary:	Postfix Greylisting Policy Server
 Summary(pl):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.27
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Daemons
 Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	df3a8b4a0c6ab7e8e5bb5be0de096c47
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
+Source3:	http://www.lipek.pl/postgrey_clients_dump
+# Source3-md5:	cde4f053d9d57c8a3777ba06e451023a
 Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
 URL:		http://isg.ee.ethz.ch/tools/postgrey/
@@ -80,8 +82,7 @@ install postgrey_whitelist_clients $RPM_BUILD_ROOT%{_sysconfdir}
 install postgrey_whitelist_recipients $RPM_BUILD_ROOT%{_sysconfdir}
 touch $RPM_BUILD_ROOT%{_sysconfdir}/postgrey_whitelist_clients.local
 
-install postgrey $RPM_BUILD_ROOT%{_sbindir}
-install contrib/postgreyreport $RPM_BUILD_ROOT%{_sbindir}
+install postgrey %{SOURCE3} contrib/postgreyreport $RPM_BUILD_ROOT%{_sbindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
