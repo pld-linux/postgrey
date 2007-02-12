@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Postfix Greylisting Policy Server
-Summary(pl):	Serwer do polityki "szarych list" dla Postfiksa
+Summary(pl.UTF-8):   Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.27
 Release:	3
@@ -44,20 +44,20 @@ or if you like to use inet sockets (modify the IP if needed):
   smtpd_recipient_restrictions = ...
     check_policy_service inet:127.0.0.1:10023, ...
 
-%description -l pl
-Postgrey to serwer polityki dla Postfiksa implementuj±cy "szare
-listy". Kiedy Postfix otrzymuje po SMTP ¿±danie dostarczenia poczty,
-tworzony jest triplet IP_KLIENTA / NADAWCA / ADRESAT. Je¶li dany
-triplet jest widziany po raz pierwszy lub by³ widziany po raz pierwszy
-mniej ni¿ 5 minut temu, poczta jest odrzucana z tymczasowym b³êdem.
-Mo¿na mieæ nadziejê, ¿e spamerzy i wirusy nie bêd± próbowaæ ponownie,
+%description -l pl.UTF-8
+Postgrey to serwer polityki dla Postfiksa implementujÄ…cy "szare
+listy". Kiedy Postfix otrzymuje po SMTP Å¼Ä…danie dostarczenia poczty,
+tworzony jest triplet IP_KLIENTA / NADAWCA / ADRESAT. JeÅ›li dany
+triplet jest widziany po raz pierwszy lub byÅ‚ widziany po raz pierwszy
+mniej niÅ¼ 5 minut temu, poczta jest odrzucana z tymczasowym bÅ‚Ä™dem.
+MoÅ¼na mieÄ‡ nadziejÄ™, Å¼e spamerzy i wirusy nie bÄ™dÄ… prÃ³bowaÄ‡ ponownie,
 co jest jednak wymagane przez RFC.
 
-Aby u¿yæ tego programu nale¿y zmodyfikowaæ pliki konfiguracyjne:
+Aby uÅ¼yÄ‡ tego programu naleÅ¼y zmodyfikowaÄ‡ pliki konfiguracyjne:
 %{_sysconfdir}/main.cf:
   smtpd_recipient_restrictions = ...
     check_policy_service unix:postgrey/socket, ...
-lub je¶li chcemy u¿ywaæ gniazd inet (w razie potrzeby zmieniæ IP):
+lub jeÅ›li chcemy uÅ¼ywaÄ‡ gniazd inet (w razie potrzeby zmieniÄ‡ IP):
 /etc/sysconfig/postgrey:
   OPTIONS="--inet=127.0.0.1:10023"
 %{_sysconfdir}/main.cf:
