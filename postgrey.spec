@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Postfix Greylisting Policy Server
-Summary(pl.UTF-8):   Serwer do polityki "szarych list" dla Postfiksa
+Summary(pl.UTF-8):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.27
 Release:	3
