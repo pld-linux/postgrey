@@ -3,7 +3,7 @@ Summary:	Postfix Greylisting Policy Server
 Summary(pl.UTF-8):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.27
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Daemons
 Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
