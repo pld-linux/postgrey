@@ -4,4 +4,4 @@
 SERVICE_RUN_NICE_LEVEL="+5"
 
 # Define your own Postgrey 4xx message
-#POSTGREY_OPTS="--greylist-text='Greylisted, see http://yourdomain.pl/your-mail-policy/?domain=%r'"
+#POSTGREY_OPTS="--greylist-text='Greylisted, see http://yourdomain.tld/your-mail-policy/?domain=%r'"
