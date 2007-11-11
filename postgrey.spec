@@ -6,7 +6,7 @@ Version:	1.31
 Release:	1
 License:	GPL v2
 Group:		Daemons
-Source0:	http://isg.ee.ethz.ch/tools/postgrey/pub/%{name}-%{version}.tar.gz
+Source0:	http://postgrey.schweikert.ch/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	b7a8a6fc9f1ad802c5a516a3be34bb29
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
@@ -14,7 +14,7 @@ Source3:	http://www.lipek.pl/postgrey_clients_dump
 # Source3-md5:	cde4f053d9d57c8a3777ba06e451023a
 Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
-URL:		http://isg.ee.ethz.ch/tools/postgrey/
+URL:		http://postgrey.schweikert.ch/
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	perl-IO-Multiplex
