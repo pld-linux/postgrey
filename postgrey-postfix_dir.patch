@@ -1,28 +1,23 @@
 --- postgrey.orig	2006-01-22 19:37:53.460148000 +0100
 +++ postgrey	2006-01-22 19:42:13.330148000 +0100
-@@ -456,10 +456,10 @@
-             greylist_action  => $opt{'greylist-action'} || 'DEFER_IF_PERMIT',
-             greylist_text    => $opt{'greylist-text'} || 'Greylisted for %s seconds (see http://isg.ee.ethz.ch/tools/postgrey/help/%r.html)',
-             whitelist_clients_files    => $opt{'whitelist-clients'} ||
--                [ '/etc/postfix/postgrey_whitelist_clients' ,
--                  '/etc/postfix/postgrey_whitelist_clients.local' ],
-+                [ '/etc/mail/postgrey_whitelist_clients' ,
-+                  '/etc/mail/postgrey_whitelist_clients.local' ],
-             whitelist_recipients_files => $opt{'whitelist-recipients'} ||
--                [ '/etc/postfix/postgrey_whitelist_recipients' ],
-+                [ '/etc/mail/postgrey_whitelist_recipients' ],
-             privacy => defined $opt{'privacy'},
-         },
-     }, 'postgrey';
-@@ -621,8 +621,8 @@
-                          (default: Greylisted for %s seconds + help url, see below)
-      --lookup-by-subnet  strip the last 8 bits from IP addresses (default)
-      --lookup-by-host    do not strip the last 8 bits from IP addresses
+@@ -24,7 +24,7 @@ use vars qw(@ISA);
+ 
+ my $VERSION = '1.31';
+ my $DEFAULT_DBDIR = '/var/spool/postfix/postgrey';
+-my $CONFIG_DIR = '/etc/postfix';
++my $CONFIG_DIR = '/etc/mail';
+ 
+ sub cidr_parse($)
+ {
+@@ -779,8 +779,8 @@ B<postgrey> [I<options>...]
+      --privacy           store data using one-way hash functions
+      --hostname=NAME     set the hostname (default: `hostname`)
+      --exim              don't reuse a socket for more than one query (exim compatible)
 -     --whitelist-clients=FILE     default: /etc/postfix/postgrey_whitelist_clients
 -     --whitelist-recipients=FILE  default: /etc/postfix/postgrey_whitelist_recipients
 +     --whitelist-clients=FILE     default: /etc/mail/postgrey_whitelist_clients
 +     --whitelist-recipients=FILE  default: /etc/mail/postgrey_whitelist_recipients
-      --auto-whitelist-clients=N   whitelist host after first successful delievery
+      --auto-whitelist-clients=N   whitelist host after first successful delivery
                                    N is the minimal count of mails before a client is 
                                    whitelisted (turned on by default with value 5)
 @@ -630,7 +630,7 @@
