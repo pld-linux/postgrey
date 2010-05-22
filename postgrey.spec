@@ -5,7 +5,7 @@ Name:		postgrey
 Version:	1.32
 Release:	1
 License:	GPL v2
-Group:		Daemons
+Group:		Networking/Daemons
 Source0:	http://postgrey.schweikert.ch/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	524a4e165bf997996f3bccade394712f
 Source1:	%{name}.init
