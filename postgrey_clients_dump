@@ -13,7 +13,7 @@ use BerkeleyDB;
 use Socket;
 
 my $dbdir = '/var/spool/postfix/postgrey/';
-my $mails = 5;
+my $mails = 3;
 
 sub resolv($) {
     my $host = shift;

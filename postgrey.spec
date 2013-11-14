@@ -3,7 +3,7 @@ Summary:	Postfix Greylisting Policy Server
 Summary(pl.UTF-8):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.34
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://postgrey.schweikert.ch/pub/%{name}-%{version}.tar.gz
@@ -14,6 +14,7 @@ Source3:	http://www.lipek.pl/postgrey_clients_dump
 # Source3-md5:	155b88f2781b03535bfa2797cda28e52
 Patch0:		%{name}-group.patch
 Patch1:		%{name}-postfix_dir.patch
+Patch2:		disable-transaction-logic
 URL:		http://postgrey.schweikert.ch/
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -68,6 +69,7 @@ lub jeśli chcemy używać gniazd inet (w razie potrzeby zmienić IP):
 %setup -q
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
