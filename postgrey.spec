@@ -2,12 +2,12 @@
 Summary:	Postfix Greylisting Policy Server
 Summary(pl.UTF-8):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
-Version:	1.34
-Release:	2
+Version:	1.35
+Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://postgrey.schweikert.ch/pub/%{name}-%{version}.tar.gz
-# Source0-md5:	f736a7be1094593f1a66cd13f32b39ef
+# Source0-md5:	995f265679c9bcc11c6c1db881003e36
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.lipek.pl/postgrey_clients_dump

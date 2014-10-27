@@ -40,7 +40,7 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/postgrey ]; then
 		msg_starting postgrey
-		daemon /usr/sbin/postgrey -d $OPTIONS
+		daemon /usr/sbin/postgrey -d --pidfile=/var/run/postgrey.pid $OPTIONS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/postgrey
 	else
