@@ -6,7 +6,7 @@
 # description:	Postfix Greylisting Policy Server
 #
 # processname:	postgrey
-# pidfile:	/var/run/greylist.pid
+# pidfile:	/var/run/postgrey.pid
 #
 
 # Source function library
@@ -40,7 +40,7 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/postgrey ]; then
 		msg_starting postgrey
-		daemon /usr/sbin/postgrey -d --pidfile=/var/run/postgrey.pid $OPTIONS
+		/usr/sbin/postgrey -d --pidfile=/var/run/postgrey.pid $OPTIONS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/postgrey
 	else
@@ -51,10 +51,10 @@ case "$1" in
 	if [ -f /var/lock/subsys/postgrey ]; then
 		msg_stopping postgrey
 		killproc postgrey
-		rm -f /var/lock/subsys/postgrey >/dev/null 2>&1
 	else
 		msg_not_running postgrey
 	fi
+	rm -f /var/lock/subsys/postgrey >/dev/null 2>&1
 	;;
   restart)
 	$0 stop
