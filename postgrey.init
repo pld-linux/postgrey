@@ -42,7 +42,12 @@ case "$1" in
 		msg_starting postgrey
 		/usr/sbin/postgrey -d --pidfile=/var/run/postgrey.pid $OPTIONS
 		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/postgrey
+		if [ $RETVAL -eq 0 ]; then
+			ok
+			touch /var/lock/subsys/postgrey
+		else
+			fail
+		fi
 	else
 		msg_already_running postgrey
 	fi
@@ -72,7 +77,7 @@ case "$1" in
 	fi
 	;;
   status)
-	status postgrey
+	status --pidfile /var/run/postgrey.pid postgrey
 	exit $?
 	;;
   *)
