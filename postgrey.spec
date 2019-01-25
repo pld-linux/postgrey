@@ -3,7 +3,7 @@ Summary:	Postfix Greylisting Policy Server
 Summary(pl.UTF-8):	Serwer do polityki "szarych list" dla Postfiksa
 Name:		postgrey
 Version:	1.37
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://postgrey.schweikert.ch/pub/%{name}-%{version}.tar.gz
@@ -13,8 +13,7 @@ Source2:	%{name}.sysconfig
 Source3:	http://www.lipek.pl/postgrey_clients_dump
 # Source3-md5:	155b88f2781b03535bfa2797cda28e52
 Patch0:		%{name}-group.patch
-Patch1:		%{name}-postfix_dir.patch
-Patch2:		disable-transaction-logic
+Patch1:		disable-transaction-logic
 URL:		http://postgrey.schweikert.ch/
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -23,7 +22,7 @@ Requires:	postfix
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sysconfdir /etc/mail
+%define		_sysconfdir /etc/postfix
 
 %description
 Postgrey is a Postfix policy server implementing greylisting. When a
@@ -68,8 +67,7 @@ lub jeśli chcemy używać gniazd inet (w razie potrzeby zmienić IP):
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
-%patch2 -p1
+%patch1 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -110,6 +108,21 @@ if [ "$1" = 0 ]; then
 	# should be done?:
 	rm -rf %{_var}/spool/postfix/%{name}
 fi
+
+%triggerun -- %{name} < 1.37-5
+if [ $1 -le 1 ]; then
+	exit 0
+fi
+for f in /etc/mail/postgres_whitelist_{clients,clients.local,recipients}; do
+	f=${f##*/}
+	[ -f "/etc/mail/$f" ] && mv "/etc/mail/$f" "/etc/postfix/$f" 2>/dev/null || :
+done
+[ -n "$(find /etc/mail -type d -empty 2>/dev/null)" ] && rmdir /etc/mail 2>/dev/null || :
+
+%triggerpostun -- %{name} < 1.37-5
+echo
+echo "Warning! Configuration has been migrated to /etc/postfix."
+echo
 
 %files
 %defattr(644,root,root,755)
